@@ -1,0 +1,22 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+.myenv/
+env/
+
+# Pytest
+.pytest_cache/
+
+# Reports
+reports/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
