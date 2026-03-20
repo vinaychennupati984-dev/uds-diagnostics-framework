@@ -51,7 +51,7 @@ uds-diagnostics-framework/
 
 ---
 
-Run Services
+**Run Services**
 
  Read DID
  
@@ -65,7 +65,7 @@ python main.py --service write_did --did 0xF190 --data 0xAA 0xBB
  
 python main.py --service session --did 0x03
 
- Run Tests
+ **Run Tests**
  
 pytest -v --junitxml=reports/report.xml
 
@@ -73,7 +73,7 @@ pytest -v --junitxml=reports/report.xml
 
 reports/report.xml
 
-Key Concepts Implemented
+**Key Concepts Implemented**
 
 CAN communication using python-can
 
@@ -87,7 +87,7 @@ Pytest fixtures and automation
 
 Clean architecture (service-based design)
 
-Future Improvements
+**Future Improvements**
 
 ISO-TP integration (multi-frame support)
 
