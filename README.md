@@ -52,13 +52,21 @@ uds-diagnostics-framework/
 ---
 
 Run Services
+
  Read DID
+ 
 python main.py --service read_did --did 0xF190
+
  Write DID
+ 
 python main.py --service write_did --did 0xF190 --data 0xAA 0xBB
+
  Session Control
+ 
 python main.py --service session --did 0x03
+
  Run Tests
+ 
 pytest -v --junitxml=reports/report.xml
 
  XML report will be generated in:
