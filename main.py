@@ -66,7 +66,7 @@ def main():
             print("Unknown service")
             return
 
-        print("📦 Result:", result)
+        print("Result:", result)
 
     finally:
         # 🔥 Clean shutdown
