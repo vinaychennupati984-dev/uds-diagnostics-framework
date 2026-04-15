@@ -1,6 +1,28 @@
 pipeline {
     agent any
 
+    options {
+        skipDefaultCheckout(true)
+    }
+
+    parameters {
+        choice(
+            name: 'SERVICE_MODE',
+            choices: ['read_did', 'write_did', 'session'],
+            description: 'Select the UDS service to run'
+        )
+        string(
+            name: 'DID',
+            defaultValue: '0xF190',
+            description: 'DID value for read_did, write_did, or session'
+        )
+        string(
+            name: 'DATA',
+            defaultValue: '0xAA 0xBB',
+            description: 'Data bytes for write_did only'
+        )
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -21,15 +43,19 @@ pipeline {
             }
         }
 
-        stage('Run Main') {
+        stage('Run UDS Command') {
             steps {
-                bat 'python main.py'
-            }
-        }
-
-        stage('Run Pytest') {
-            steps {
-                bat 'python -m pytest --junitxml=report.xml'
+                script {
+                    if (params.SERVICE_MODE == 'read_did') {
+                        bat "python main.py --service read_did --did ${params.DID}"
+                    } else if (params.SERVICE_MODE == 'write_did') {
+                        bat "python main.py --service write_did --did ${params.DID} --data ${params.DATA}"
+                    } else if (params.SERVICE_MODE == 'session') {
+                        bat "python main.py --service session --did ${params.DID}"
+                    } else {
+                        error("Unsupported SERVICE_MODE: ${params.SERVICE_MODE}")
+                    }
+                }
             }
         }
     }
