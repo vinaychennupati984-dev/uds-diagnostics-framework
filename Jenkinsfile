@@ -2,45 +2,41 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                echo 'Checking out source code...'
                 checkout scm
             }
         }
 
-        stage('Verify Files') {
+        stage('Check Python') {
             steps {
-                echo 'Listing files in workspace'
-                sh 'ls -l'
+                bat 'python --version'
+                bat 'python -m pip --version'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install Requirements') {
             steps {
-                sh 'python -m pip install -r requirements.txt'
+                bat 'python -m pip install -r requirements.txt'
             }
         }
 
-        stage('Run Main Script') {
+        stage('Run Main') {
             steps {
-                sh 'echo Running main.py'
-                sh 'python main.py'
+                bat 'python main.py'
             }
         }
 
-        stage('Run PyTest') {
+        stage('Run Pytest') {
             steps {
-                sh 'echo Running pytest'
-                sh 'pytest --junitxml=report.xml'
+                bat 'python -m pytest --junitxml=report.xml'
             }
         }
     }
 
     post {
         always {
-            junit 'report.xml'
+            junit allowEmptyResults: true, testResults: 'report.xml'
         }
     }
 }
