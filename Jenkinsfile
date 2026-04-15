@@ -5,24 +5,26 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/vinaychennupati984-dev/uds-diagnostics-framework'
+                checkout scm
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'python -m pip install -r requirements.txt'
             }
         }
 
         stage('Run Main Script') {
             steps {
+                sh 'echo Running main.py'
                 sh 'python main.py'
             }
         }
 
         stage('Run PyTest') {
             steps {
+                sh 'echo Running pytest'
                 sh 'pytest --junitxml=report.xml'
             }
         }
