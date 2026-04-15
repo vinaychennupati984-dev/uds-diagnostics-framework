@@ -6,21 +6,9 @@ pipeline {
     }
 
     parameters {
-        choice(
-            name: 'SERVICE_MODE',
-            choices: ['read_did', 'write_did', 'session'],
-            description: 'Select the UDS service to run'
-        )
-        string(
-            name: 'DID',
-            defaultValue: '0xF190',
-            description: 'DID value for read_did, write_did, or session'
-        )
-        string(
-            name: 'DATA',
-            defaultValue: '0xAA 0xBB',
-            description: 'Data bytes for write_did only'
-        )
+        choice(name: 'SERVICE_MODE', choices: ['read_did', 'write_did', 'session'], description: 'Select the UDS service to run')
+        string(name: 'DID', defaultValue: '0xF190', description: 'DID value')
+        string(name: 'DATA', defaultValue: '0xAA 0xBB', description: 'Data bytes for write_did only')
     }
 
     stages {
@@ -56,6 +44,12 @@ pipeline {
                         error("Unsupported SERVICE_MODE: ${params.SERVICE_MODE}")
                     }
                 }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat 'python -m pytest --junitxml=report.xml'
             }
         }
     }
