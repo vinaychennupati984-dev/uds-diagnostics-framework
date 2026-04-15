@@ -37,21 +37,21 @@ def main():
         # 🔐 + ✍️ WRITE DID (with security)
         elif args.service == "write_did":
             if not args.data:
-                print("❌ Please provide --data for write_did (e.g. --data 0xAA 0xBB)")
+                print(" Please provide --data for write_did (e.g. --data 0xAA 0xBB)")
                 return
 
             # Step 1: Security Access
             sec = SecurityAccess(client)
 
             seed = sec.request_seed()
-            print(f"🔑 Seed received: {seed}")
+            print(f"Seed received: {seed}")
 
             key = [0x00, 0x00]  # dummy key (mock ECU accepts anything)
             if not sec.send_key(key):
-                print("❌ Security Unlock Failed")
+                print(" Security Unlock Failed")
                 return
 
-            print("✅ Security Unlocked")
+            print(" Security Unlocked")
 
             # Step 2: Write DID
             service = WriteDID(client)
@@ -63,7 +63,7 @@ def main():
             result = service.change_session(0x03)
 
         else:
-            print("❌ Unknown service")
+            print("Unknown service")
             return
 
         print("📦 Result:", result)
